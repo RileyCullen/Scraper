@@ -52,6 +52,3 @@ class OddsPortalScraper:
 
         # submit page
         passwordInput.send_keys(Keys.ENTER)
-
-
-test = OddsPortalScraper(headless=False)
