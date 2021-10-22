@@ -1,3 +1,4 @@
+# desc: Starting point for OddsPortal scraper shell
 def main():
     isRunning = True
     while(isRunning):
