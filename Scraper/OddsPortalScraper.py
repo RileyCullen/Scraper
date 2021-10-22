@@ -82,11 +82,19 @@ class OddsPortalScraper:
         for element in tableElements:
             try:
                 betmakerName = element.find_element_by_css_selector('td > div.l > a.name').text
-                playerOneOdds, playerTwoOdds = element.find_elements_by_css_selector('td.right.odds > div')
+
+                # Get the odds and store it
+                odds = element.find_elements_by_css_selector('td.right.odds > div')
+
+                # If the request is empty (this occurs when the odds are not 
+                # div elements and are actually links), then get these links 
+                # instead
+                if odds == []:
+                    odds = element.find_elements_by_css_selector('td.right.odds > a')
 
                 bookmakerOdds[betmakerName] = {
-                    '0': playerOneOdds.text,
-                    '1': playerTwoOdds.text,
+                    '0': odds[0].text,
+                    '1': odds[1].text
                 }
             except NoSuchElementException:
                 pass
