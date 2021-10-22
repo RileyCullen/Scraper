@@ -5,6 +5,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 
 class OddsPortalScraper:
     # desc: Constructor for OddsPortalScraper class
@@ -64,6 +65,30 @@ class OddsPortalScraper:
     # ---------------
     # link : string
     #   A link containing to OddsPortal containing the bet maker odds.
+    #
+    # Returns: A json object containing the bookmaker name as the key and the 
+    # bookmaker odds as the value.
     def GetBetmakerOdds(self, link): 
+        bookmakerOdds = {}
+
+        # Go to link
         self._webdriver.get(link)
-        # Get betmaker odds (Betmaker name, betmaker odds)
+
+        # Get betmaker odds table
+        tableElements = self._webdriver\
+            .find_elements_by_css_selector('#odds-data-table > div.table-container > \
+            table > tbody > tr')
+
+        for element in tableElements:
+            try:
+                betmakerName = element.find_element_by_css_selector('td > div.l > a.name').text
+                playerOneOdds, playerTwoOdds = element.find_elements_by_css_selector('td.right.odds > div')
+
+                bookmakerOdds[betmakerName] = {
+                    '0': playerOneOdds.text,
+                    '1': playerTwoOdds.text,
+                }
+            except NoSuchElementException:
+                pass
+        
+        return bookmakerOdds
