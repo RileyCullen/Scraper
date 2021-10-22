@@ -55,7 +55,8 @@ class OddsPortalScraper:
         # submit page
         passwordInput.send_keys(Keys.ENTER)
 
-        return (self._webdriver.getCurrentUrl() == 'https://www.oddsportal.com/')
+        return (self._webdriver.current_url == 'https://www.oddsportal.com/' 
+            or self._webdriver.current_url == 'https://www.oddsportal.com/settings/')
 
     # desc: Scrapes a match link for bet maker odds
     #
