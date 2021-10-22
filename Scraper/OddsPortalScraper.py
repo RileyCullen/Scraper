@@ -67,6 +67,8 @@ class OddsPortalScraper:
     def MatchScraper(self, link): 
         self._webdriver.get(link)
         # Get match info (tournament, date, etc)
+        date = self._webdriver\
+            .find_element_by_css_selector('#col-content > p.date').text
         # Get player names and store in an array
         playerNames = self._webdriver\
             .find_element_by_css_selector('#col-content > h1')\
