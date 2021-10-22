@@ -25,7 +25,7 @@ class OddsPortalScraper:
     def __del__(self):
         # if __webdriver has been initialized, close the browser instance.
         if (self._webdriver):
-            # self._webdriver.quit() 
+            self._webdriver.quit() 
             pass
 
     # desc: Goes to OddsPortal's login page to login
