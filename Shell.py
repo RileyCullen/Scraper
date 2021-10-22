@@ -11,13 +11,15 @@ def main():
 
         if (tokens[0] == 'scrape'):
             pass
-        if (tokens[0] == 'login'):
+        elif (tokens[0] == 'login'):
             if (len(tokens) == 3):
                 status = scraper.Login(tokens[1], tokens[2])
                 if (status): print('Login Successful')
                 else: print('Login Failed')
             else:
                 PrintError('missing login info: login (username) (password)')
+        elif (tokens[0] == 'quit'):
+            isRunning = False
 def PrintError(message):
     print('Error: ' + message)
 if __name__ == '__main__':
