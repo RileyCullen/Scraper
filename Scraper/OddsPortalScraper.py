@@ -10,4 +10,12 @@ class OddsPortalScraper:
         options = Options()
         options.headless = headless
         self.__webdriver = webdriver.Chrome('/Users/rileycullen/chromedriver', 
-            options=options)
+            options=options)   
+
+    # desc: Destructor for OddsPortalScraper class
+    def __del__(self):
+        # if __webdriver has been initialized, close the browser instance.
+        if (self.__webdriver):
+            self.__webdriver.quit() 
+
+test = OddsPortalScraper(headless=False)
