@@ -132,3 +132,14 @@ class OddsPortalScraper:
                 matches.append(tmp)
     
         return matches
+
+    # desc: Scrapes the tennis page for tournament links
+    # 
+    # Parameters:
+    # ---------------
+    # link : string 
+    #   A link to the OddsPortal tennis page
+    #
+    # Returns: An array of links to the tournament 
+    def GetTournaments(self, link):
+        pass
