@@ -92,3 +92,14 @@ class OddsPortalScraper:
                 pass
         
         return bookmakerOdds
+
+    # desc: Scrapes a tournament link for matches 
+    #
+    # Parameters: 
+    # ---------------
+    # link : string
+    #   A link to a tournament on OddsPortal (containing individual matches)
+    #
+    # Returns: An array of links to individual matches
+    def GetMatches(self, link): 
+        pass
