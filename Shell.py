@@ -4,8 +4,10 @@ from Scraper.OddsPortalScraper import OddsPortalScraper
 def main():
     isRunning = True
     print('Initializing OddsPortal scraper...')
+    # Initialize webscraper
     scraper = OddsPortalScraper(headless = True)
     while(isRunning):
+        # Get user's command and parse it into tokens
         request = input('[scraper] $ ')
         tokens = request.split(' ')
 
@@ -20,7 +22,10 @@ def main():
                 PrintError('missing login info: login (username) (password)')
         elif (tokens[0] == 'quit'):
             isRunning = False
+
+# desc: Print an error message     
 def PrintError(message):
     print('Error: ' + message)
+    
 if __name__ == '__main__':
     main()
