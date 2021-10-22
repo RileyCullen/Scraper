@@ -6,8 +6,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 class OddsPortalScraper:
-    def __init__(self):
+    def __init__(self, headless = True):
         options = Options()
-        options.headless = True
+        options.headless = headless
         self.__webdriver = webdriver.Chrome('Users/rileycullen/chromedriver', 
             options=options)
