@@ -9,5 +9,5 @@ class OddsPortalScraper:
     def __init__(self, headless = True):
         options = Options()
         options.headless = headless
-        self.__webdriver = webdriver.Chrome('Users/rileycullen/chromedriver', 
+        self.__webdriver = webdriver.Chrome('/Users/rileycullen/chromedriver', 
             options=options)
