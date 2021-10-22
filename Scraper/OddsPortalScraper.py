@@ -102,4 +102,25 @@ class OddsPortalScraper:
     #
     # Returns: An array of links to individual matches
     def GetMatches(self, link): 
-        pass
+        matches = []
+
+        # Go to link
+        self._webdriver.get(link)
+
+        # Get all the links to the matches
+        matchLinks = self._webdriver.find_elements_by_css_selector('td.name.table-participant > a')
+
+        for link in matchLinks:
+            # Get link's href attribute
+            href = link.get_attribute('href')
+
+            # if the first letter is an 'h', then this is a real link (to a match)
+            # and we need to add it to matches.
+            if (href[0] == 'h'):
+                tmp = {
+                    'name': link.text,
+                    'link': href
+                }
+                matches.append(tmp)
+    
+        return matches
