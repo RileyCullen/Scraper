@@ -142,4 +142,21 @@ class OddsPortalScraper:
     #
     # Returns: An array of links to the tournament 
     def GetTournaments(self, link):
-        pass
+        tournaments = []
+
+        # Go to link
+        self._webdriver.get(link)
+
+        # Get tournament entires 
+        tournamentLinks = self._webdriver.find_elements_by_css_selector('td > \
+            a[foo="f"]')
+        
+        # For each entry, get the tournament name and link to tournament page
+        for tournament in tournamentLinks:
+            tmp = {
+                'name': tournament.text,
+                'link': tournament.get_attribute('href')
+            }
+            tournaments.append(tmp)
+        
+        return tournaments
