@@ -4,6 +4,7 @@
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 
 class OddsPortalScraper:
     # desc: Constructor for OddsPortalScraper class
@@ -24,7 +25,8 @@ class OddsPortalScraper:
     def __del__(self):
         # if __webdriver has been initialized, close the browser instance.
         if (self._webdriver):
-            self._webdriver.quit() 
+            # self._webdriver.quit() 
+            pass
 
     # desc: Goes to OddsPortal's login page to login
     #
@@ -36,6 +38,20 @@ class OddsPortalScraper:
     # password : string 
     #   User's OddsPortal password
     def Login(self, username, password):
-        pass
+        # Go to login page
+        loginURL = 'https://www.oddsportal.com/login/'
+        self._webdriver.get(loginURL)
+
+        # find input fields for username and password
+        usernameInput = self._webdriver.find_element_by_id('login-username1')
+        passwordInput = self._webdriver.find_element_by_id('login-password1')   
+  
+        # fill input fields with username and password respectively
+        usernameInput.send_keys(username)
+        passwordInput.send_keys(password)
+
+        # submit page
+        passwordInput.send_keys(Keys.ENTER)
+
 
 test = OddsPortalScraper(headless=False)
