@@ -52,3 +52,5 @@ class OddsPortalScraper:
 
         # submit page
         passwordInput.send_keys(Keys.ENTER)
+
+        return (self._webdriver.getCurrentUrl() == 'https://www.oddsportal.com/')
