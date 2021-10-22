@@ -64,4 +64,8 @@ class OddsPortalScraper:
     # link : string
     #   A link containing to OddsPortal containing the bet maker odds.
     def MatchScraper(self, link): 
-        pass
+        self._webdriver.get(link)
+        # Get match info (tournament, date, etc)
+        # Get player names
+        playerNames = self._webdriver.find_element_by_css_selector('#col-content > h1')
+        # Get betmaker odds (Betmaker name, betmaker odds)
