@@ -55,5 +55,11 @@ class OddsPortalScraper:
 
         return (self._webdriver.getCurrentUrl() == 'https://www.oddsportal.com/')
 
-    def MatchScraper(self): 
+    # desc: Scrapes a match link for bet maker odds
+    #
+    # Parameters:
+    # ---------------
+    # link : string
+    #   A link containing to OddsPortal containing the bet maker odds.
+    def MatchScraper(self, link): 
         pass
