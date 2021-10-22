@@ -37,6 +37,8 @@ class OddsPortalScraper:
     # 
     # password : string 
     #   User's OddsPortal password
+    #
+    # Returns: A boolean indicating whether or not login was successful
     def Login(self, username, password):
         # Go to login page
         loginURL = 'https://www.oddsportal.com/login/'
