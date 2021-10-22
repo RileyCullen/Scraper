@@ -66,11 +66,4 @@ class OddsPortalScraper:
     #   A link containing to OddsPortal containing the bet maker odds.
     def GetBetmakerOdds(self, link): 
         self._webdriver.get(link)
-        # Get match info (tournament, date, etc)
-        date = self._webdriver\
-            .find_element_by_css_selector('#col-content > p.date').text
-        # Get player names and store in an array
-        playerNames = self._webdriver\
-            .find_element_by_css_selector('#col-content > h1')\
-            .text.split(' - ', 2)
         # Get betmaker odds (Betmaker name, betmaker odds)
