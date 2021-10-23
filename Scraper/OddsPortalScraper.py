@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
-import datetime
+import datetime, time
 
 class OddsPortalScraper:
     # desc: Constructor for OddsPortalScraper class
@@ -29,7 +29,6 @@ class OddsPortalScraper:
         # if __webdriver has been initialized, close the browser instance.
         if (self._webdriver):
             self._webdriver.quit() 
-            pass
 
     # desc: Goes to OddsPortal's login page to login
     #
