@@ -14,7 +14,7 @@ def main():
         if (tokens[0] == 'scrape'):
             # if only 'scrape' is typed, then start from /tennis/ and scrape down
             if (len(tokens) == 1):
-                ParseTennis()
+                ParseTennis(scraper)
         elif (tokens[0] == 'login'):
             if (len(tokens) == 3):
                 status = scraper.Login(tokens[1], tokens[2])
@@ -31,8 +31,23 @@ def PrintError(message):
 
 # desc: Start at /tennis/ page, find all of the tournaments, then find all of
 # the tournament matches and scrape that for betmaker odds
-def ParseTennis():
-    pass
+#
+# Parameters:
+# ---------------
+# scraper : OddsPortalScraper
+#   Scraper object we want to use
+def ParseTennis(scraper):
+    tournaments = scraper.GetTournaments('https://www.oddsportal.com/tennis/')
+
+    print('\nParsing results from /tennis/ page...')
+
+    for tournament in tournaments:
+        print('\n**********Tournament: ' + tournament['name'])
+        matches = scraper.GetMatches(tournament['link'])
+        for match in matches:
+            print('\n***************Match: ' + match['name'])
+            odds = scraper.GetBetmakerOdds(match['link'])
+            print(odds)
 
 if __name__ == '__main__':
     main()
