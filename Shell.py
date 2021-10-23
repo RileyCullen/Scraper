@@ -41,13 +41,27 @@ def ParseTennis(scraper):
 
     print('\nParsing results from /tennis/ page...')
 
+    data = {}
+
     for tournament in tournaments:
         print('\n**********Tournament: ' + tournament['name'])
         matches = scraper.GetMatches(tournament['link'])
+
+        tournamentKey = tournament['name'].replace(' ', '-')
+        data[tournamentKey] = {}
+
+        matchCount = 0
         for match in matches:
             print('\n***************Match: ' + match['name'])
             odds = scraper.GetBetmakerOdds(match['link'])
+
+            data[tournamentKey][matchCount] = {}
+            data[tournamentKey][matchCount]['p1'] = 'player1'
+            data[tournamentKey][matchCount]['p2'] = 'player2'
+            data[tournamentKey][matchCount]['odds'] = odds
+
             print(odds)
+            matchCount += 1
 
 if __name__ == '__main__':
     main()
