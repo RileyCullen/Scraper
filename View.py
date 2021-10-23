@@ -16,6 +16,8 @@ class ViewJSON:
     def SetData(self, data):
         self._data = data
 
+    # desc: Returns the tournaments in _data
+    # Returns: An array of the tournament names in _data
     def GetTournaments(self):
         tmp = []
         for keys in self._data:
