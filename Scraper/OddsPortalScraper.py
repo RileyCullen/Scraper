@@ -7,6 +7,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
+import datetime
+
 class OddsPortalScraper:
     # desc: Constructor for OddsPortalScraper class
     #
@@ -70,6 +72,7 @@ class OddsPortalScraper:
     # bookmaker odds as the value.
     def GetBetmakerOdds(self, link): 
         bookmakerOdds = {}
+        bookmakerOdds['timestamp'] = self._Timestamp()
 
         # Go to link
         self._webdriver.get(link)
@@ -160,3 +163,6 @@ class OddsPortalScraper:
             tournaments.append(tmp)
         
         return tournaments
+
+    def _Timestamp(self):
+        return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
