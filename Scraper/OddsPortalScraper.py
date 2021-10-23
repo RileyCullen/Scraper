@@ -164,5 +164,7 @@ class OddsPortalScraper:
         
         return tournaments
 
+    # desc: Gets the current date as a string
+    # Returns: A string representing the date
     def _Timestamp(self):
         return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
