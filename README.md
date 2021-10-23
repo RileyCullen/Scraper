@@ -2,7 +2,7 @@
 This tool is designed to scrape OddsPortal.com for bookmaker odds.
 
 ## Requirements
-This tool requires MacOS, Selenium, and Google Chrome to run. 
+This tool requires Selenium and Google Chrome to run. 
 
 ## Installation
 1. Clone this repository
