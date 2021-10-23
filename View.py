@@ -15,3 +15,9 @@ class ViewJSON:
     #   A JSON object consisting of data obtained from the OddsPortal
     def SetData(self, data):
         self._data = data
+
+    def GetTournaments(self):
+        tmp = []
+        for keys in self._data:
+            tmp.append(keys)
+        return tmp
