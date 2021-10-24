@@ -33,6 +33,13 @@ def main():
                     for tournament in tournaments:
                         print(tournament)
                     print('\n')
+            if (len(tokens) == 3):
+                if (tokens[1] == 'matches'):
+                    matches = view.GetMatches(tokens[2])
+                    print('\nMatch List:')
+                    for match in matches:
+                        print(match)
+                    print('\n')
         elif (tokens[0] == 'quit'):
             isRunning = False
 
@@ -67,8 +74,8 @@ def ParseTennis(scraper):
             odds = scraper.GetBetmakerOdds(match['link'])
 
             data[tournamentKey][matchCount] = {}
-            data[tournamentKey][matchCount]['p1'] = 'player1'
-            data[tournamentKey][matchCount]['p2'] = 'player2'
+            data[tournamentKey][matchCount]['p1'], data[tournamentKey]\
+                [matchCount]['p2'] = match['name'].split(" - ")
             data[tournamentKey][matchCount]['odds'] = odds
 
             print(odds)
