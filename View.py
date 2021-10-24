@@ -23,3 +23,19 @@ class ViewJSON:
         for keys in self._data:
             tmp.append(keys)
         return tmp
+    
+    # desc: Returns the matches for a given tournament
+    # 
+    # Parameters:
+    # --------------
+    # tournamentKey : string 
+    #   The tournament key needed to access the match data in _data
+    #
+    # Returns: An array of match data (key + players)
+    def GetMatches(self, tournamentKey):
+        tmp = []
+        tournament = self._data[tournamentKey]
+        for matches in tournament:
+            tmp.append(str(matches) + ": " + tournament[matches]['p1'] + ' vs ' + \
+                tournament[matches]['p2'])
+        return tmp
