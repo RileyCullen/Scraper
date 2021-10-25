@@ -126,7 +126,7 @@ class OddsPortalScraper:
 
             # if the first letter is an 'h', then this is a real link (to a match)
             # and we need to add it to matches.
-            if (href[0] == 'h'):
+            if (href[0] == 'h' and link.text != ""):
                 tmp = {
                     'name': link.text,
                     'link': href
