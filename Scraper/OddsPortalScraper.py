@@ -167,3 +167,7 @@ class OddsPortalScraper:
     # Returns: A string representing the date
     def _Timestamp(self):
         return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # desc: Switches the OddsPortal odds to display EU odds
+    def _SwitchToEUOdds(self):
+        pass
