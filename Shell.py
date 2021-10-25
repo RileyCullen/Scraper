@@ -86,6 +86,7 @@ def ParseTennis(scraper):
 
             print(odds)
             matchCount += 1
+    return data
 
 if __name__ == '__main__':
     main()
