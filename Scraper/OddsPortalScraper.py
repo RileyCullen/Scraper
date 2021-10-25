@@ -56,6 +56,9 @@ class OddsPortalScraper:
 
         # submit page
         passwordInput.send_keys(Keys.ENTER)
+         
+        # switch to EU odds
+        self._SwitchToEUOdds()
 
         return (self._webdriver.current_url == 'https://www.oddsportal.com/' 
             or self._webdriver.current_url == 'https://www.oddsportal.com/settings/')
@@ -170,4 +173,10 @@ class OddsPortalScraper:
 
     # desc: Switches the OddsPortal odds to display EU odds
     def _SwitchToEUOdds(self):
-        pass
+        expander = self._webdriver.find_element_by_css_selector('#user-header-oddsformat-expander')
+        expander.click()
+        elems = self._webdriver.find_elements_by_css_selector('#user-header-oddsformat > li > a')
+        
+        for elem in elems:
+            if elem.text == 'EU Odds':
+                elem.click()
