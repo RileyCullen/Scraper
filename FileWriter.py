@@ -1,3 +1,5 @@
+import json
+
 # desc: Takes in a JSON object and writes it to a file
 #
 # Parameters:
@@ -7,4 +9,5 @@
 # filename : string
 #   The name of the file
 def WriteToJSON(data, filename = 'data.json'):
-    pass
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii = False, indent = 4)
