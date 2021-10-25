@@ -173,10 +173,15 @@ class OddsPortalScraper:
 
     # desc: Switches the OddsPortal odds to display EU odds
     def _SwitchToEUOdds(self):
+        # Find dropdown list with all oof the options and click on it (expand it)
         expander = self._webdriver.find_element_by_css_selector('#user-header-oddsformat-expander')
         expander.click()
+
+        # Find the options in the expanded dropdown menu
         elems = self._webdriver.find_elements_by_css_selector('#user-header-oddsformat > li > a')
         
+        # For each option found, check the text content. If it says "EU Odds",
+        # then click on it
         for elem in elems:
             if elem.text == 'EU Odds':
                 elem.click()
