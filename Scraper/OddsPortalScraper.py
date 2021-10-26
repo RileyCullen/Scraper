@@ -83,19 +83,19 @@ class OddsPortalScraper:
         tableElements = self._webdriver\
             .find_elements_by_css_selector('#odds-data-table > div.table-container > \
             table > tbody > tr')
-
         for element in tableElements:
             try:
                 betmakerName = element.find_element_by_css_selector('td > div.l > a.name').text
-
                 # Get the odds and store it
                 odds = element.find_elements_by_css_selector('td.right.odds > div')
 
                 # If the request is empty (this occurs when the odds are not 
                 # div elements and are actually links), then get these links 
                 # instead
-                if odds == []:
-                    odds = element.find_elements_by_css_selector('td.right.odds > a')
+                aOdds = element.find_elements_by_css_selector('td.right.odds > a') 
+                if aOdds != []:
+                    for a in aOdds:
+                        odds.append(a)
 
                 bookmakerOdds[betmakerName] = {
                     '0': odds[0].text,
