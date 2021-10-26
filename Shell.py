@@ -49,7 +49,7 @@ def main():
             WriteToJSON(data, filename)
         elif (tokens[0] == 'read'):
             if (len(tokens) == 2):
-                data = ReadFromJSON(tokens[0])
+                data = ReadFromJSON(tokens[1])
         elif (tokens[0] == 'quit'):
             isRunning = False
 
