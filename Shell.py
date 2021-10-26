@@ -3,6 +3,8 @@ from View import ViewJSON
 from FileWriter import WriteToJSON
 from FileReader import ReadFromJSON
 
+import datetime
+
 # desc: Starting point for OddsPortal scraper shell
 def main():
     isRunning = True
@@ -76,23 +78,27 @@ def ParseTennis(scraper, currData = {}):
         print('\n**********Tournament: ' + tournament['name'])
         matches = scraper.GetMatches(tournament['link'])
 
+        tournamentKey = tournament['name'].replace(' ', '-')
+        hasTournamentKey = True
         # if the tournament entry does NOT exist, create one
-        if (tournament['name'] not in currData.keys()):
-            tournamentKey = tournament['name'].replace(' ', '-')
+        if (not (tournamentKey in currData.keys())):
+            hasTournamentKey = False
             data[tournamentKey] = {}
 
-        matchCount = 0
         for match in matches:
             print('\n***************Match: ' + match['name'])
+            matchKey = match['name']
             odds = scraper.GetBetmakerOdds(match['link'])
 
-            data[tournamentKey][matchCount] = {}
-            data[tournamentKey][matchCount]['p1'], data[tournamentKey]\
-                [matchCount]['p2'] = match['name'].split(" - ")
-            data[tournamentKey][matchCount]['odds'] = odds
+            if (not hasTournamentKey or not (matchKey in currData[tournamentKey].keys())):
+                data[tournamentKey][matchKey] = {}
+                data[tournamentKey][matchKey]['p1'], data[tournamentKey]\
+                    [matchKey]['p2'] = match['name'].split(" - ")
+            
+            timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            data[tournamentKey][matchKey][timestamp] = odds 
 
             print(odds)
-            matchCount += 1
     return data
 
 if __name__ == '__main__':
