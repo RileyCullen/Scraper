@@ -7,8 +7,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
-import datetime
-
 class OddsPortalScraper:
     # desc: Constructor for OddsPortalScraper class
     #
@@ -164,11 +162,6 @@ class OddsPortalScraper:
             tournaments.append(tmp)
         
         return tournaments
-
-    # desc: Gets the current date as a string
-    # Returns: A string representing the date
-    def _Timestamp(self):
-        return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     # desc: Switches the OddsPortal odds to display EU odds
     def _SwitchToEUOdds(self):
