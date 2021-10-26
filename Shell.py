@@ -1,6 +1,7 @@
 from Scraper.OddsPortalScraper import OddsPortalScraper
 from View import ViewJSON
 from FileWriter import WriteToJSON
+from FileReader import ReadFromJSON
 
 # desc: Starting point for OddsPortal scraper shell
 def main():
@@ -46,6 +47,9 @@ def main():
             if (len(tokens) == 2):
                 filename = tokens[1]
             WriteToJSON(data, filename)
+        elif (tokens[0] == 'read'):
+            if (len(tokens) == 2):
+                data = ReadFromJSON(tokens[0])
         elif (tokens[0] == 'quit'):
             isRunning = False
 
