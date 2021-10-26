@@ -74,7 +74,6 @@ class OddsPortalScraper:
     # bookmaker odds as the value.
     def GetBetmakerOdds(self, link): 
         bookmakerOdds = {}
-        bookmakerOdds['timestamp'] = self._Timestamp()
 
         # Go to link
         self._webdriver.get(link)
