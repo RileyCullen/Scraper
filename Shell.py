@@ -50,6 +50,7 @@ def main():
         elif (tokens[0] == 'read'):
             if (len(tokens) == 2):
                 data = ReadFromJSON(tokens[1])
+                view.SetData(data)
         elif (tokens[0] == 'quit'):
             isRunning = False
 
