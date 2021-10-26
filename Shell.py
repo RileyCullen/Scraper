@@ -65,7 +65,7 @@ def PrintError(message):
 # ---------------
 # scraper : OddsPortalScraper
 #   Scraper object we want to use
-def ParseTennis(scraper):
+def ParseTennis(scraper, currData = {}):
     tournaments = scraper.GetTournaments('https://www.oddsportal.com/tennis/')
 
     print('\nParsing results from /tennis/ page...')
@@ -76,8 +76,10 @@ def ParseTennis(scraper):
         print('\n**********Tournament: ' + tournament['name'])
         matches = scraper.GetMatches(tournament['link'])
 
-        tournamentKey = tournament['name'].replace(' ', '-')
-        data[tournamentKey] = {}
+        # if the tournament entry does NOT exist, create one
+        if (tournament['name'] not in currData.keys()):
+            tournamentKey = tournament['name'].replace(' ', '-')
+            data[tournamentKey] = {}
 
         matchCount = 0
         for match in matches:
