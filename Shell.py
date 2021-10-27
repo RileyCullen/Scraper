@@ -18,8 +18,6 @@ def main():
         request = input('[scraper] $ ')
         tokens = request.split(' ')
 
-        print(tokens)
-
         if (tokens[0] == 'scrape'):
             # if only 'scrape' is typed, then start from /tennis/ and scrape down
             if (len(tokens) == 1):
