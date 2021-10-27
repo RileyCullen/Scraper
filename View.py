@@ -52,5 +52,6 @@ class ViewJSON:
         tmp = []
         match = self._data[tournamentKey][matchKey]
         for timestamp in match:
-            tmp.append(timestamp)
+            if (timestamp != 'p1' and timestamp != 'p2'):
+                tmp.append(timestamp)
         return tmp
