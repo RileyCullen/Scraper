@@ -39,3 +39,14 @@ class ViewJSON:
             tmp.append(str(matches) + ": " + tournament[matches]['p1'] + ' vs ' + \
                 tournament[matches]['p2'])
         return tmp
+
+    # desc: Returns the timestamps for a given match
+    #
+    # Parameters:
+    # --------------
+    # tournamentKey : string
+    # matchKey : string 
+    # 
+    # Returns: An array of timestamp information.
+    def GetMatchTimestamps(self, tournamentKey, matchKey):
+        pass
