@@ -12,6 +12,7 @@ def main():
     # Initialize webscraper
     scraper = OddsPortalScraper(headless = True)
     view = ViewJSON()
+    data = {}
     while(isRunning):
         # Get user's command and parse it into tokens
         request = input('[scraper] $ ')
@@ -20,7 +21,7 @@ def main():
         if (tokens[0] == 'scrape'):
             # if only 'scrape' is typed, then start from /tennis/ and scrape down
             if (len(tokens) == 1):
-                data = ParseTennis(scraper)
+                data = ParseTennis(scraper, data)
                 view.SetData(data)
         elif (tokens[0] == 'login'):
             if (len(tokens) == 3):
@@ -67,12 +68,10 @@ def PrintError(message):
 # ---------------
 # scraper : OddsPortalScraper
 #   Scraper object we want to use
-def ParseTennis(scraper, currData = {}):
+def ParseTennis(scraper, data = {}):
     tournaments = scraper.GetTournaments('https://www.oddsportal.com/tennis/')
 
     print('\nParsing results from /tennis/ page...')
-
-    data = {}
 
     for tournament in tournaments:
         print('\n**********Tournament: ' + tournament['name'])
@@ -81,7 +80,7 @@ def ParseTennis(scraper, currData = {}):
         tournamentKey = tournament['name'].replace(' ', '-')
         hasTournamentKey = True
         # if the tournament entry does NOT exist, create one
-        if (not (tournamentKey in currData.keys())):
+        if (not (tournamentKey in data.keys())):
             hasTournamentKey = False
             data[tournamentKey] = {}
 
@@ -90,7 +89,7 @@ def ParseTennis(scraper, currData = {}):
             matchKey = match['name']
             odds = scraper.GetBetmakerOdds(match['link'])
 
-            if (not hasTournamentKey or not (matchKey in currData[tournamentKey].keys())):
+            if (not hasTournamentKey or not (matchKey in data[tournamentKey].keys())):
                 data[tournamentKey][matchKey] = {}
                 data[tournamentKey][matchKey]['p1'], data[tournamentKey]\
                     [matchKey]['p2'] = match['name'].split(" - ")
