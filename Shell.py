@@ -18,6 +18,8 @@ def main():
         request = input('[scraper] $ ')
         tokens = request.split(' ')
 
+        print(tokens)
+
         if (tokens[0] == 'scrape'):
             # if only 'scrape' is typed, then start from /tennis/ and scrape down
             if (len(tokens) == 1):
@@ -44,6 +46,13 @@ def main():
                     print('\nMatch List:')
                     for match in matches:
                         print(match)
+                    print('\n')
+            if(len(tokens) == 4):
+                if (tokens[1] == 'timestamps'):
+                    timestamps = view.GetMatchTimestamps(tokens[2], tokens[3])
+                    print('\nTimestamp List:')
+                    for timestamp in timestamps:
+                        print(timestamp)
                     print('\n')
         elif (tokens[0] == 'write'):
             filename = 'data.json'
