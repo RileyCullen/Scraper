@@ -47,10 +47,10 @@ def main():
                     for match in matches:
                         print(match)
                     print('\n')
-            if(len(tokens) == 4):
-                if (tokens[1] == 'timestamps'):
-                    timestamps = view.GetMatchTimestamps(tokens[2], tokens[3])
-                    print('\nTimestamp List:')
+                elif (tokens[1] == 'timestamps'):
+                    match = input('Match: ')
+                    timestamps = view.GetMatchTimestamps(tokens[2], match)
+                    print('\nMatch List:')
                     for timestamp in timestamps:
                         print(timestamp)
                     print('\n')
