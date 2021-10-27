@@ -49,4 +49,8 @@ class ViewJSON:
     # 
     # Returns: An array of timestamp information.
     def GetMatchTimestamps(self, tournamentKey, matchKey):
-        pass
+        tmp = []
+        match = self._data[tournamentKey][matchKey]
+        for timestamp in match:
+            tmp.append(timestamp)
+        return tmp
