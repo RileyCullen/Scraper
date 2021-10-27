@@ -55,3 +55,13 @@ class ViewJSON:
             if (timestamp != 'p1' and timestamp != 'p2'):
                 tmp.append(timestamp)
         return tmp
+
+    # desc: Returns the betmaker odds for a given timestamp
+    #
+    # Parameters:
+    # ---------------
+    # tournamentKey : string
+    # matchKey : string
+    # timestamp : string 
+    def GetBetmakerOdds(self, tournamentKey, matchKey, timestamp):
+        pass
