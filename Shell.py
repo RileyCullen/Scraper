@@ -52,6 +52,14 @@ def main():
                     for timestamp in timestamps:
                         print(timestamp)
                     print('\n')
+                elif (tokens[1] == 'odds'):
+                    match = input('\nMatch: ')
+                    timestamp = input('Timestamp: ')
+                    odds = view.GetBetmakerOdds(tokens[2], match, timestamp)
+                    print('\nOdds:')
+                    for entry in odds:
+                        print(entry)
+                    print('\n')
         elif (tokens[0] == 'write'):
             filename = 'data.json'
             if (len(tokens) == 2):
