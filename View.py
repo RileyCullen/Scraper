@@ -64,4 +64,10 @@ class ViewJSON:
     # matchKey : string
     # timestamp : string 
     def GetBetmakerOdds(self, tournamentKey, matchKey, timestamp):
-        pass
+        tmp = []
+        timestamps = self._data[tournamentKey][matchKey][timestamp]
+        for odds in timestamps:
+            entry = odds + ' -> p1:'  + timestamps[odds]['0'] + '| p2: ' + \
+                timestamps[odds]['1']
+            tmp.append(entry)
+        return tmp
