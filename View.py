@@ -36,8 +36,7 @@ class ViewJSON:
         tmp = []
         tournament = self._data[tournamentKey]
         for matches in tournament:
-            tmp.append(str(matches) + ": " + tournament[matches]['p1'] + ' vs ' + \
-                tournament[matches]['p2'])
+            tmp.append(str(matches))
         return tmp
 
     # desc: Returns the timestamps for a given match
