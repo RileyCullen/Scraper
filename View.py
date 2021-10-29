@@ -72,8 +72,6 @@ class ViewJSON:
         col_list = ['p1', 'p2']
         row_list = []
         for odds in timestamps:
-            entry = odds + ' -> p1:'  + timestamps[odds]['0'] + '| p2: ' + \
-                timestamps[odds]['1']
             row_list.append(odds)
             tmp.append([timestamps[odds]['0'], timestamps[odds]['1']])
         return pandas.DataFrame(tmp, row_list, col_list)
