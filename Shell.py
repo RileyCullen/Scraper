@@ -76,6 +76,13 @@ def main():
 def PrintError(message):
     print('Error: ' + message)
 
+# desc: Print title, followed by the contents of list
+def PrintList(list, title):
+    print('\n' + title)
+    for elem in list:
+        print(elem)
+    print('\n')
+
 # desc: Start at /tennis/ page, find all of the tournaments, then find all of
 # the tournament matches and scrape that for betmaker odds
 #
