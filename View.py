@@ -2,6 +2,8 @@
 # View.py
 # Created on 10/23/21
 
+import pandas
+
 class ViewJSON:
     # desc: Constructor for ViewJSON class
     def __init__(self):
@@ -62,11 +64,16 @@ class ViewJSON:
     # tournamentKey : string
     # matchKey : string
     # timestamp : string 
+    #
+    # Returns: A pandas DataFrame containing the odds information
     def GetBetmakerOdds(self, tournamentKey, matchKey, timestamp):
         tmp = []
         timestamps = self._data[tournamentKey][matchKey][timestamp]
+        col_list = ['p1', 'p2']
+        row_list = []
         for odds in timestamps:
             entry = odds + ' -> p1:'  + timestamps[odds]['0'] + '| p2: ' + \
                 timestamps[odds]['1']
-            tmp.append(entry)
-        return tmp
+            row_list.append(odds)
+            tmp.append([timestamps[odds]['0'], timestamps[odds]['1']])
+        return pandas.DataFrame(tmp, row_list, col_list)
