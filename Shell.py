@@ -2,6 +2,7 @@ from Scraper.OddsPortalScraper import OddsPortalScraper
 from View import ViewJSON
 from FileWriter import WriteToJSON
 from FileReader import ReadFromJSON
+from Probability import CalculateProbability
 
 import datetime
 
@@ -61,6 +62,12 @@ def main():
             if (len(tokens) == 2):
                 data = ReadFromJSON(tokens[1])
                 view.SetData(data)
+        elif (tokens[0] == 'calculate'):
+            filename = 'percentage.json'
+            if (len(tokens) == 2):
+                filename = tokens[1] 
+            probabilities = CalculateProbability(data)
+            WriteToJSON(probabilities, filename)   
         elif (tokens[0] == 'quit'):
             isRunning = False
 
