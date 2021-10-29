@@ -33,21 +33,25 @@ def main():
         elif (tokens[0] =='view'):
             if (len(tokens) == 2):
                 if (tokens[1] == 'tournaments'):
-                    tournaments = view.GetTournaments()
-                    PrintList(tournaments, 'Tournaments: ')
-            if (len(tokens) == 3):
-                if (tokens[1] == 'matches'):
-                    matches = view.GetMatches(tokens[2])
-                    PrintList(matches, 'Matches: ')
+                    PrintTournaments(view)
+                elif (tokens[1] == 'matches'):
+                    PrintTournaments(view)
+                    tournament = input('Tournament: ')
+                    PrintMatches(view, tournament)
                 elif (tokens[1] == 'timestamps'):
+                    PrintTournaments(view)
+                    tournament = input('Tournament: ')
+                    PrintMatches(view, tournament)
                     match = input('Match: ')
-                    timestamps = view.GetMatchTimestamps(tokens[2], match)
-                    PrintList(timestamps, 'Timestamps: ')
+                    PrintTimestamps(view, tournament, match)
                 elif (tokens[1] == 'odds'):
-                    match = input('\nMatch: ')
+                    PrintTournaments(view)
+                    tournament = input('Tournament: ')
+                    PrintMatches(view, tournament)
+                    match = input('Match: ')
+                    PrintTimestamps(view, tournament, match)
                     timestamp = input('Timestamp: ')
-                    odds = view.GetBetmakerOdds(tokens[2], match, timestamp)
-                    PrintList(odds, 'Odds: ')
+                    PrintOdds(view, tournament, match, timestamp)
         elif (tokens[0] == 'write'):
             filename = 'data.json'
             if (len(tokens) == 2):
@@ -70,6 +74,26 @@ def PrintList(list, title):
     for elem in list:
         print(elem)
     print('\n')
+
+# desc: Print all of the tournaments stored in data
+def PrintTournaments(view):
+    tournaments = view.GetTournaments()
+    PrintList(tournaments, 'Tournaments: ')
+
+# desc: Print all of the matches for a given tournament
+def PrintMatches(view, tournament):
+    matches = view.GetMatches(tournament)
+    PrintList(matches, 'Matches: ')
+
+# desc: Print all of the timestamps for a given match
+def PrintTimestamps(view, tournament, match):
+    timestamps = view.GetMatchTimestamps(tournament, match)
+    PrintList(timestamps, 'Timestamps: ') 
+
+# desc: Print all of the betmaker odds for a given timestamp
+def PrintOdds(view, tournament, match, timestamp):
+    odds = view.GetBetmakerOdds(tournament, match, timestamp)
+    PrintList(odds, 'Odds: ')
 
 # desc: Start at /tennis/ page, find all of the tournaments, then find all of
 # the tournament matches and scrape that for betmaker odds
