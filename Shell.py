@@ -93,7 +93,7 @@ def PrintTimestamps(view, tournament, match):
 # desc: Print all of the betmaker odds for a given timestamp
 def PrintOdds(view, tournament, match, timestamp):
     odds = view.GetBetmakerOdds(tournament, match, timestamp)
-    PrintList(odds, 'Odds: ')
+    print(odds)
 
 # desc: Start at /tennis/ page, find all of the tournaments, then find all of
 # the tournament matches and scrape that for betmaker odds
