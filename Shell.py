@@ -34,32 +34,20 @@ def main():
             if (len(tokens) == 2):
                 if (tokens[1] == 'tournaments'):
                     tournaments = view.GetTournaments()
-                    print('\nTournament List:')
-                    for tournament in tournaments:
-                        print(tournament)
-                    print('\n')
+                    PrintList(tournaments, 'Tournaments: ')
             if (len(tokens) == 3):
                 if (tokens[1] == 'matches'):
                     matches = view.GetMatches(tokens[2])
-                    print('\nMatch List:')
-                    for match in matches:
-                        print(match)
-                    print('\n')
+                    PrintList(matches, 'Matches: ')
                 elif (tokens[1] == 'timestamps'):
                     match = input('Match: ')
                     timestamps = view.GetMatchTimestamps(tokens[2], match)
-                    print('\nMatch List:')
-                    for timestamp in timestamps:
-                        print(timestamp)
-                    print('\n')
+                    PrintList(timestamps, 'Timestamps: ')
                 elif (tokens[1] == 'odds'):
                     match = input('\nMatch: ')
                     timestamp = input('Timestamp: ')
                     odds = view.GetBetmakerOdds(tokens[2], match, timestamp)
-                    print('\nOdds:')
-                    for entry in odds:
-                        print(entry)
-                    print('\n')
+                    PrintList(odds, 'Odds: ')
         elif (tokens[0] == 'write'):
             filename = 'data.json'
             if (len(tokens) == 2):
