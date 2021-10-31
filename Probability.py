@@ -29,3 +29,22 @@ def CalculateProbability(data):
                         except ValueError:
                             print('Not a float')
     return tmp
+
+# desc : Remove the bookmaker influence from the scraped odds.
+# 
+# Parameters:
+# ---------------
+# p0 : float 
+#   The non-adjusted bookmaker odd of pN winning.
+# margin : float
+def AdjustProbability(p0, margin):
+    return ((2 * p0) / (2 - (margin * p0)))
+
+# desc : Calculate the margin
+#
+# Parameters:
+# ---------------
+# p1 : float
+# p2 : float
+def CalculateMargin(p1, p2):
+    return ((1 / p1) + (1 / p2) - 1)
