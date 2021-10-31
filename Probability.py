@@ -19,15 +19,22 @@ def CalculateProbability(data):
                     tmp[tournament][match][timestamp] = {} 
                     for betmaker in data[tournament][match][timestamp]:
                         print(betmaker)
-                        p1Odds = data[tournament][match][timestamp][betmaker]['0']
-                        p2Odds = data[tournament][match][timestamp][betmaker]['1']
-                        try:
-                            tmp[tournament][match][timestamp][betmaker] = {
-                                '0': 1 / float(p1Odds),
-                                '1': 1 / float(p2Odds)
-                            }
+                        try: 
+                            p1Odds = float(data[tournament][match][timestamp]\
+                                [betmaker]['0'])
+                            p2Odds = float(data[tournament][match][timestamp]\
+                                [betmaker]['1'])
                         except ValueError:
-                            print('Not a float')
+                            print('Not a Float')
+
+                        margin = CalculateMargin(p1Odds, p2Odds)
+                        adjustedP1Odds = AdjustProbability(p1Odds, margin)
+                        adjustedP2Odds = AdjustProbability(p2Odds, margin)
+
+                        tmp[tournament][match][timestamp][betmaker] = {
+                            '0': 1 / adjustedP1Odds,
+                            '1': 1 / adjustedP2Odds
+                        }
     return tmp
 
 # desc : Remove the bookmaker influence from the scraped odds.
@@ -38,7 +45,7 @@ def CalculateProbability(data):
 #   The non-adjusted bookmaker odd of pN winning.
 # margin : float
 def AdjustProbability(p0, margin):
-    return ((2 * p0) / (2 - (margin * p0)))
+    return ((2.0 * p0) / (2.0 - (margin * p0)))
 
 # desc : Calculate the margin
 #
@@ -47,4 +54,4 @@ def AdjustProbability(p0, margin):
 # p1 : float
 # p2 : float
 def CalculateMargin(p1, p2):
-    return ((1 / p1) + (1 / p2) - 1)
+    return ((1.0 / p1) + (1.0 / p2) - 1.0)
