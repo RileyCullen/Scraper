@@ -111,7 +111,8 @@ def PrintOdds(view, tournament, match, timestamp):
 # scraper : OddsPortalScraper
 #   Scraper object we want to use
 def ParseTennis(scraper, data = {}):
-    tournaments = RemoveTournaments(scraper.GetTournaments('https://www.oddsportal.com/tennis/'), ['Doubles'])
+    tournaments = RemoveTournaments(scraper.GetTournaments(\
+        'https://www.oddsportal.com/tennis/'), ['Doubles'])
     for tournament in tournaments:
         print('\n**********Tournament: ' + tournament['name'])
         matches = scraper.GetMatches(tournament['link'])
