@@ -3,6 +3,7 @@ from View import ViewJSON
 from FileWriter import WriteToJSON
 from FileReader import ReadFromJSON
 from Probability import CalculateProbability
+from Remove import RemoveTournaments
 
 import datetime
 
@@ -110,10 +111,7 @@ def PrintOdds(view, tournament, match, timestamp):
 # scraper : OddsPortalScraper
 #   Scraper object we want to use
 def ParseTennis(scraper, data = {}):
-    tournaments = scraper.GetTournaments('https://www.oddsportal.com/tennis/')
-
-    print('\nParsing results from /tennis/ page...')
-
+    tournaments = RemoveTournaments(scraper.GetTournaments('https://www.oddsportal.com/tennis/'), ['Doubles'])
     for tournament in tournaments:
         print('\n**********Tournament: ' + tournament['name'])
         matches = scraper.GetMatches(tournament['link'])
