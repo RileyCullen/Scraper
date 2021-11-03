@@ -1,7 +1,14 @@
-# desc: Remove all doubles tournament entries from tournaments.
+# desc: Remove all tournament entries from tournaments that have a given keyword
+#       in their text.
 #
 # Parameters:
 # ---------------
 # tournaments : json
-def RemoveDoublesTournaments(tournaments):
-    pass
+# keywords    : list
+def RemoveTournaments(tournaments, keywords):
+    tmp = []
+    for tournament in tournaments:
+        for keyword in keywords:
+            if keyword not in tournament.text:
+                tmp.append(tournament)
+    return tmp
