@@ -5,8 +5,12 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoSuchElementException
-
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+import time
 class OddsPortalScraper:
     # desc: Constructor for OddsPortalScraper class
     #
@@ -20,7 +24,9 @@ class OddsPortalScraper:
         options = Options()
         options.headless = headless
         self._webdriver = webdriver.Chrome('/Users/rileycullen/chromedriver', 
-            options=options)   
+            options=options)  
+        ignored_exceptions = (NoSuchElementException, StaleElementReferenceException)
+        self._wait = WebDriverWait(self._webdriver, 2, ignored_exceptions=ignored_exceptions) 
 
     # desc: Destructor for OddsPortalScraper class
     def __del__(self):
@@ -113,7 +119,7 @@ class OddsPortalScraper:
     # Returns: An array of links to individual matches
     def GetMatches(self, link): 
         matches = []
-
+        time.sleep(1)
         # Go to link
         self._webdriver.get(link)
 
@@ -166,7 +172,13 @@ class OddsPortalScraper:
     # desc: Switches the OddsPortal odds to display EU odds
     def _SwitchToEUOdds(self):
         # Find dropdown list with all oof the options and click on it (expand it)
-        expander = self._webdriver.find_element_by_css_selector('#user-header-oddsformat-expander')
+        try:
+            expander = self._wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, \
+                "#user-header-oddsformat-expander")))
+        except:
+            print('ERR timeout')
+            return
+
         expander.click()
 
         # Find the options in the expanded dropdown menu
