@@ -104,7 +104,7 @@ class OddsPortalScraper:
                     '0': odds[0].text,
                     '1': odds[1].text
                 }
-            except NoSuchElementException:
+            except:
                 pass
         
         return bookmakerOdds
