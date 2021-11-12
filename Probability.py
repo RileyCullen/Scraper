@@ -8,17 +8,13 @@
 def CalculateProbability(data):
     tmp = {}
     for tournament in data:
-        print(tournament)
         tmp[tournament] = {}
         for match in data[tournament]:
-            print(match)
             tmp[tournament][match] = {}
             for timestamp in data[tournament][match]:
-                print(timestamp)
                 if (timestamp != 'p1' and timestamp != 'p2'):
                     tmp[tournament][match][timestamp] = {} 
                     for betmaker in data[tournament][match][timestamp]:
-                        print(betmaker)
                         try: 
                             p1Odds = float(data[tournament][match][timestamp]\
                                 [betmaker]['0'])
