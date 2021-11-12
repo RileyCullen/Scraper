@@ -1,5 +1,7 @@
+from Probability import CalculateProbability
 from Remove import RemoveTournaments
 from FileWriter import WriteToJSON
+from FileReader import ReadFromJSON
 from Scraper.OddsPortalScraper import OddsPortalScraper
 import datetime, sys, threading, time, copy
 
@@ -14,10 +16,25 @@ def Main():
 
 def Crawl(scraper, username, password):
     startTime = time.time()
-    data = ParseTennis(scraper, username, password, {})
-    print(data)
-    WriteToJSON(data, 'data-multithreading3.json')
-    print('Elapsed: ' + str(time.time() - startTime))
+
+    readFromFile = input('Read from existing file (Y/N)? ')
+    filename = ''
+
+    data = {}
+    if (readFromFile == 'Y' or readFromFile == 'y'):
+        filename = input('Read from: ')
+        data = ReadFromJSON(filename)
+    else:
+        filename = input('Data output filename: ')
+
+    scrapeCount = int(input('Scrape iterations (enter -1 for infinite): '))
+
+    while (scrapeCount > 0):
+        data = ParseTennis(scraper, username, password, data)
+        probabilityData = CalculateProbability(data)
+        WriteToJSON(probabilityData, filename)
+        print('Elapsed: ' + str(time.time() - startTime))
+        scrapeCount -= 1
 
 def ParseTennis(scraper, username, password, data = {}):
     time.sleep(3)
@@ -35,18 +52,24 @@ def ParseTennis(scraper, username, password, data = {}):
         threads.append(th)
 
     tmp = {}
+    tArr = []
+
     for th in threads:
-        tData = th.join()
+        tArr.append(th.join())
+
+    print('Combining data...')
+    for tData in tArr:
         for key in tData:
-            print('KEY: ' + key)
-            tmp[key] = tData[key]
+            if (key not in tmp.keys()):
+                print(key + ' added SUCCESSFULLY')
+                tmp[key] = tData[key]
 
     return tmp
 
 def ParseTournament(tournament, scraper, data):
-    print('\n**********Tournament: ' + tournament['name'])
+    # print('\n**********Tournament: ' + tournament['name'])
     matches = scraper.GetMatches(tournament['link'])
-    print(matches)
+    # print(matches)
     tournamentKey = tournament['name'].replace(' ', '-')
     hasTournamentKey = True
     # if the tournament entry does NOT exist, create one
@@ -55,10 +78,12 @@ def ParseTournament(tournament, scraper, data):
         data[tournamentKey] = {}
 
     for match in matches:
-        print('\n***************Match: ' + match['name'])
+        # print('\n***************Match: ' + match['name'])
         matchKey = match['name']
         odds = scraper.GetBetmakerOdds(match['link'])
 
+        # if the tournament entry did NOT exist originally or matchKey does NOT
+        # exist in data[tournamentKeys]
         if (not hasTournamentKey or not (matchKey in data[tournamentKey].keys())):
             data[tournamentKey][matchKey] = {}
             data[tournamentKey][matchKey]['p1'], data[tournamentKey]\
@@ -82,7 +107,6 @@ class TournamentParser(threading.Thread):
 
     # desc: Wait for thread to complete then return the scraped data
     def join(self):
-        print('joined')
         threading.Thread.join(self)
         return self._return
 
