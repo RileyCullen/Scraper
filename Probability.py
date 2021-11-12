@@ -21,7 +21,7 @@ def CalculateProbability(data):
                             p2Odds = float(data[tournament][match][timestamp]\
                                 [betmaker]['1'])
                         except ValueError:
-                            print('Not a Float')
+                            pass
 
                         margin = CalculateMargin(p1Odds, p2Odds)
                         adjustedP1Odds = AdjustProbability(p1Odds, margin)
