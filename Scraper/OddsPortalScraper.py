@@ -46,20 +46,23 @@ class OddsPortalScraper:
     #
     # Returns: A boolean indicating whether or not login was successful
     def Login(self, username, password):
-        # Go to login page
-        loginURL = 'https://www.oddsportal.com/login/'
-        self._webdriver.get(loginURL)
+        try:
+            # Go to login page
+            loginURL = 'https://www.oddsportal.com/login/'
+            self._webdriver.get(loginURL)
 
-        # find input fields for username and password
-        usernameInput = self._webdriver.find_element_by_id('login-username1')
-        passwordInput = self._webdriver.find_element_by_id('login-password1')   
-  
-        # fill input fields with username and password respectively
-        usernameInput.send_keys(username)
-        passwordInput.send_keys(password)
+            # find input fields for username and password
+            usernameInput = self._webdriver.find_element_by_id('login-username1')
+            passwordInput = self._webdriver.find_element_by_id('login-password1')   
+    
+            # fill input fields with username and password respectively
+            usernameInput.send_keys(username)
+            passwordInput.send_keys(password)
 
-        # submit page
-        passwordInput.send_keys(Keys.ENTER)
+            # submit page
+            passwordInput.send_keys(Keys.ENTER)
+        except:
+            pass
          
         # switch to EU odds
         self._SwitchToEUOdds()
@@ -79,15 +82,16 @@ class OddsPortalScraper:
     def GetBetmakerOdds(self, link): 
         bookmakerOdds = {}
 
-        # Go to link
-        self._webdriver.get(link)
+        try:
+            # Go to link
+            self._webdriver.get(link)
 
-        # Get betmaker odds table
-        tableElements = self._webdriver\
-            .find_elements_by_css_selector('#odds-data-table > div.table-container > \
-            table > tbody > tr')
-        for element in tableElements:
-            try:
+            # Get betmaker odds table
+            tableElements = self._webdriver\
+                .find_elements_by_css_selector('#odds-data-table > div.table-container > \
+                table > tbody > tr')
+            
+            for element in tableElements:
                 betmakerName = element.find_element_by_css_selector('td > div.l > a.name').text
                 # Get the odds and store it
                 odds = element.find_elements_by_css_selector('td.right.odds > div')
@@ -104,8 +108,8 @@ class OddsPortalScraper:
                     '0': odds[0].text,
                     '1': odds[1].text
                 }
-            except:
-                pass
+        except:
+            pass
         
         return bookmakerOdds
 
@@ -120,24 +124,27 @@ class OddsPortalScraper:
     def GetMatches(self, link): 
         matches = []
         time.sleep(1)
-        # Go to link
-        self._webdriver.get(link)
+        try:
+            # Go to link
+            self._webdriver.get(link)
 
-        # Get all the links to the matches
-        matchLinks = self._webdriver.find_elements_by_css_selector('td.name.table-participant > a')
+            # Get all the links to the matches
+            matchLinks = self._webdriver.find_elements_by_css_selector('td.name.table-participant > a')
 
-        for link in matchLinks:
-            # Get link's href attribute
-            href = link.get_attribute('href')
+            for link in matchLinks:
+                # Get link's href attribute
+                href = link.get_attribute('href')
 
-            # if the first letter is an 'h', then this is a real link (to a match)
-            # and we need to add it to matches.
-            if (href[0] == 'h' and link.text != ""):
-                tmp = {
-                    'name': link.text,
-                    'link': href
-                }
-                matches.append(tmp)
+                # if the first letter is an 'h', then this is a real link (to a match)
+                # and we need to add it to matches.
+                if (href[0] == 'h' and link.text != ""):
+                    tmp = {
+                        'name': link.text,
+                        'link': href
+                    }
+                    matches.append(tmp)
+        except:
+            pass
     
         return matches
 
@@ -152,20 +159,23 @@ class OddsPortalScraper:
     def GetTournaments(self, link):
         tournaments = []
 
-        # Go to link
-        self._webdriver.get(link)
+        try:
+            # Go to link
+            self._webdriver.get(link)
 
-        # Get tournament entires 
-        tournamentLinks = self._webdriver.find_elements_by_css_selector('td > \
-            a[foo="f"]')
-        
-        # For each entry, get the tournament name and link to tournament page
-        for tournament in tournamentLinks:
-            tmp = {
-                'name': tournament.text,
-                'link': tournament.get_attribute('href')
-            }
-            tournaments.append(tmp)
+            # Get tournament entires 
+            tournamentLinks = self._webdriver.find_elements_by_css_selector('td > \
+                a[foo="f"]')
+            
+            # For each entry, get the tournament name and link to tournament page
+            for tournament in tournamentLinks:
+                tmp = {
+                    'name': tournament.text,
+                    'link': tournament.get_attribute('href')
+                }
+                tournaments.append(tmp)
+        except:
+            pass
         
         return tournaments
 
@@ -175,17 +185,15 @@ class OddsPortalScraper:
         try:
             expander = self._wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, \
                 "#user-header-oddsformat-expander")))
+            expander.click()
+
+            # Find the options in the expanded dropdown menu
+            elems = self._webdriver.find_elements_by_css_selector('#user-header-oddsformat > li > a')
+            
+            # For each option found, check the text content. If it says "EU Odds",
+            # then click on it
+            for elem in elems:
+                if elem.text == 'EU Odds':
+                    elem.click()
         except:
-            print('ERR timeout')
             return
-
-        expander.click()
-
-        # Find the options in the expanded dropdown menu
-        elems = self._webdriver.find_elements_by_css_selector('#user-header-oddsformat > li > a')
-        
-        # For each option found, check the text content. If it says "EU Odds",
-        # then click on it
-        for elem in elems:
-            if elem.text == 'EU Odds':
-                elem.click()
