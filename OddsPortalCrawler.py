@@ -62,8 +62,13 @@ def ParseTennis(scraper, username, password, data = {}):
     for tData in tArr:
         for key in tData:
             if (key not in tmp.keys()):
-                print(key + ' added SUCCESSFULLY')
-                tmp[key] = tData[key]
+                tmp[key] = {}
+            for match in tData[key]:
+                if (match not in tmp[key].keys()):
+                    tmp[key][match] = {}
+                for timestamp in tData[key][match]:
+                    if (timestamp not in tmp[key][match]):
+                        tmp[key][match][timestamp] = tData[key][match][timestamp]
 
     return tmp
 
