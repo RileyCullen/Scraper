@@ -16,7 +16,7 @@ def Crawl(scraper, username, password):
     startTime = time.time()
     data = ParseTennis(scraper, username, password, {})
     print(data)
-    WriteToJSON(data, 'data-multithreading.json')
+    WriteToJSON(data, 'data-multithreading3.json')
     print('Elapsed: ' + str(time.time() - startTime))
 
 def ParseTennis(scraper, username, password, data = {}):
@@ -38,7 +38,9 @@ def ParseTennis(scraper, username, password, data = {}):
     for th in threads:
         tData = th.join()
         for key in tData:
+            print('KEY: ' + key)
             tmp[key] = tData[key]
+
     return tmp
 
 def ParseTournament(tournament, scraper, data):
