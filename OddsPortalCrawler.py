@@ -29,10 +29,11 @@ def Crawl(scraper, username, password):
 
     scrapeCount = int(input('Scrape iterations (enter -1 for infinite): '))
 
+    print('Scraping... (note this may take a while)')
     while (scrapeCount > 0):
         data = ParseTennis(scraper, username, password, data)
         probabilityData = CalculateProbability(data)
-        WriteToJSON(probabilityData, filename)
+        WriteToJSON(data, filename)
         print('Elapsed: ' + str(time.time() - startTime))
         scrapeCount -= 1
 
@@ -91,8 +92,6 @@ def ParseTournament(tournament, scraper, data):
         
         timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         data[tournamentKey][matchKey][timestamp] = odds 
-
-        print(odds)
     return data
 
 class TournamentParser(threading.Thread):
